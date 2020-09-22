@@ -10,6 +10,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 
@@ -25,6 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return super.authenticationManagerBean();
   }
 
+
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
 
@@ -36,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeRequests()
-        .antMatchers("/users/access-token").permitAll()
+        .antMatchers("/api/auth/**").permitAll()
             .antMatchers("/users").permitAll()
         .antMatchers("/access-token/refresh").permitAll()
             .antMatchers("/users/access-token/password").permitAll()
@@ -49,7 +53,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public AuthenticationFailureHandler authenticationFailureHandler() {
-    return new com.upgrad.eshop.config.RestAuthenticationFailureHandler();
+      return new com.upgrad.eshop.config.RestAuthenticationFailureHandler();
+  }
+
+  @Bean
+  public PasswordEncoder passwordEncoder(){
+      return new BCryptPasswordEncoder();
   }
 }
 

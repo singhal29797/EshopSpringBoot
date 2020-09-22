@@ -1,7 +1,5 @@
 package com.upgrad.eshop.security;
 
-import com.upgrad.eshop.exceptions.UserNotFoundException;
-import com.upgrad.eshop.services.EshopUserServiceImpl;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
